@@ -3,13 +3,13 @@ import Table from "./Table";
 import Form from "./Form";
 import { useState } from "react";
 
-// Данные клиентов прямо в компоненте
+//FirstName, LastName, Email
 const initialClients = [
-  { id: 1, name: "Ben", surname: "Blocker", phone: "+123(45)1234567" },
-  { id: 2, name: "Alice", surname: "Smith", phone: "+123(45)2345678" },
-  { id: 3, name: "John", surname: "Doe", phone: "+123(45)3456789" }
+  { id: 1, firstName: "Брайан", lastName: "Крэнстон", email: "walter.white@email.com" },
+  { id: 2, firstName: "Аарон", lastName: "Пол", email: "jesse.pinkman@email.com" },
+  { id: 3, firstName: "Анна", lastName: "Ганн", email: "skyler.white@email.com" },
+  { id: 4, firstName: "Дин", lastName: "Норрис", email: "hank.schrader@email.com" }
 ];
-
 function App() {
   const [clients, setClients] = useState(initialClients);
 
@@ -27,7 +27,8 @@ function App() {
 
   return (
     <div className="App">
-      <Form handleSubmit={addClient} inClient={{name: "", surname: "", phone: ""}}/>
+      <h1>Users</h1>
+      <Form handleSubmit={addClient} inClient={{firstName: "", lastName: "", email: ""}}/>
       <Table clients={clients} delClient={delCli} />
     </div>
   );

@@ -17,28 +17,28 @@ const Form = ({ handleSubmit, inClient }) => {
   
     return (
       <form onSubmit={onSubmit}>
-        <label htmlFor="name">Name</label>
+        <label htmlFor="firstName">FirstName</label>
         <input
           type="text"
-          name="name"
-          value={client.name}
+          name="firstName"
+          value={client.firstName}
           onChange={handleChange}
         />
-        <label htmlFor="surname">Surname</label>
+        <label htmlFor="lastName">LastName</label>
         <input
           type="text"
-          name="surname"
-          value={client.surname}
+          name="lastName"
+          value={client.lastName}
           onChange={handleChange}
         />
-        <label htmlFor="phone">Phone</label>
+        <label htmlFor="email">Email</label>
         <input
-          type="text"
-          name="phone"
-          value={client.phone}
+          type="email"
+          name="email"
+          value={client.email}
           onChange={handleChange}
         />
-        <button type="submit">Add</button>
+        <button type="submit">Add User</button>
       </form>
     );
   };

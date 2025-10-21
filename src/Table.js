@@ -8,24 +8,26 @@ const ClientTable = ({ clients, delClient }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Surname</TableCell>
-            <TableCell>phone</TableCell>
+            <TableCell>Id</TableCell>
+            <TableCell>FirstName</TableCell>
+            <TableCell>LastName</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {clients.map((client, index) => (
             <TableRow key={index}>
-              <TableCell>{client.name}</TableCell>
-              <TableCell>{client.surname}</TableCell>
-              <TableCell>{client.phone}</TableCell>
+              <TableCell>{client.id}</TableCell>
+              <TableCell>{client.firstName}</TableCell>
+              <TableCell>{client.lastName}</TableCell>
+              <TableCell>{client.email}</TableCell>
               <TableCell>
-                <Button varianted="containded" color="secondary"
+                <Button variant="contained" color="secondary"
                   onClick={() => delClient(client.id)}>Delete</Button>
               </TableCell>
             </TableRow>
           ))}
-
         </TableBody>
       </Table>
     </TableContainer>
