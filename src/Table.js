@@ -1,13 +1,13 @@
 import { Table, TableContainer, Button, TableBody, TableRow, TableHead, Paper, TableCell } from "@mui/material";
 import React from "react";
 
-const ClientTable = ({ clients, delClient }) => {
+const ClientTable = ({ clients, delClient, onEdit }) => {
 
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ backgroundColor: '#e0e0e0' }}>
             <TableCell>Id</TableCell>
             <TableCell>FirstName</TableCell>
             <TableCell>LastName</TableCell>
@@ -17,14 +17,35 @@ const ClientTable = ({ clients, delClient }) => {
         </TableHead>
         <TableBody>
           {clients.map((client, index) => (
-            <TableRow key={index}>
+            <TableRow 
+              key={client.id}
+              sx={{ 
+                backgroundColor: index % 2 === 0 ? '#f8f8f8' : '#ffffff',
+                '&:hover': { backgroundColor: '#e3f2fd' }
+              }}
+            >
               <TableCell>{client.id}</TableCell>
               <TableCell>{client.firstName}</TableCell>
               <TableCell>{client.lastName}</TableCell>
               <TableCell>{client.email}</TableCell>
               <TableCell>
-                <Button variant="contained" color="secondary"
-                  onClick={() => delClient(client.id)}>Delete</Button>
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  size="small"
+                  onClick={() => onEdit(client)}
+                  sx={{ marginRight: 1 }}
+                >
+                  Edit
+                </Button>
+                <Button 
+                  variant="contained" 
+                  color="secondary"
+                  size="small"
+                  onClick={() => delClient(client.id)}
+                >
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
           ))}

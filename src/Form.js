@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { Button, Box } from "@mui/material";
 
-const Form = ({ handleSubmit, inClient }) => {
+const Form = ({ handleSubmit, inClient, onCancel }) => {
     const [client, setClient] = useState(inClient);
   
     const handleChange = (event) => {
@@ -12,11 +13,16 @@ const Form = ({ handleSubmit, inClient }) => {
     const onSubmit = (event) => {
       event.preventDefault();
       handleSubmit(client);
-      setClient(inClient);
+      setClient({firstName: "", lastName: "", email: ""});
+    };
+
+    const handleCancel = () => {
+      setClient({firstName: "", lastName: "", email: ""});
+      if (onCancel) onCancel();
     };
   
     return (
-      <form onSubmit={onSubmit}>
+      <Box component="form" onSubmit={onSubmit} sx={{ marginBottom: 3 }}>
         <label htmlFor="firstName">FirstName</label>
         <input
           type="text"
@@ -38,8 +44,22 @@ const Form = ({ handleSubmit, inClient }) => {
           value={client.email}
           onChange={handleChange}
         />
-        <button type="submit">Add User</button>
-      </form>
+        <Box sx={{ marginTop: 1 }}>
+          <Button type="submit" variant="contained" color="primary">
+            {onCancel ? "Update" : "Add User"}
+          </Button>
+          {onCancel && (
+            <Button 
+              variant="outlined" 
+              color="secondary" 
+              onClick={handleCancel}
+              sx={{ marginLeft: 1 }}
+            >
+              Cancel
+            </Button>
+          )}
+        </Box>
+      </Box>
     );
   };
   
