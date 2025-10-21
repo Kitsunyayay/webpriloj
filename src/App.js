@@ -2,8 +2,10 @@ import './App.css';
 import Table from "./Table";
 import Form from "./Form";
 import ClientCard from "./Card";
+import Login from "./Login";
 import { useState } from "react";
 import { Button, Box } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 const initialClients = [
   { id: 1, firstName: "Брайан", lastName: "Крэнстон", email: "walter.white@email.com" },
@@ -12,10 +14,16 @@ const initialClients = [
   { id: 4, firstName: "Дин", lastName: "Норрис", email: "hank.schrader@email.com" }
 ];
 
+const users = [
+  { email: "admin@test.com", password: "123456" },
+  { email: "user@test.com", password: "password" }
+];
+
 function App() {
   const [clients, setClients] = useState(initialClients);
   const [viewMode, setViewMode] = useState('table');
   const [editingClient, setEditingClient] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const delCli = (id) => {
     setClients(clients.filter((client) => client.id !== id));
@@ -42,9 +50,29 @@ function App() {
     setEditingClient(null);
   };
 
-  return (
+  const handleLogin = (email, password) => {
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
+      setCurrentUser({ email });
+      return true;
+    }
+    return false;
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+  };
+
+  const MainApp = () => (
     <div className="App">
-      <h1>Актеры Breaking Bad</h1>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <h1>Актеры Breaking Bad</h1>
+        {currentUser && (
+          <Button variant="outlined" onClick={handleLogout}>
+            Выйти ({currentUser.email})
+          </Button>
+        )}
+      </Box>
       
       <Box sx={{ marginBottom: 2 }}>
         <Button 
@@ -83,6 +111,25 @@ function App() {
         </Box>
       )}
     </div>
+  );
+
+  return (
+    <Router>
+      <Routes>
+        <Route 
+          path="/login" 
+          element={
+            currentUser ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />
+          } 
+        />
+        <Route 
+          path="/" 
+          element={
+            currentUser ? <MainApp /> : <Navigate to="/login" replace />
+          } 
+        />
+      </Routes>
+    </Router>
   );
 }
 
