@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Box } from "@mui/material";
+import { Button, Box, TextField } from "@mui/material";
 
 const Form = ({ handleSubmit, inClient, onCancel }) => {
     const [client, setClient] = useState(inClient);
@@ -23,30 +23,37 @@ const Form = ({ handleSubmit, inClient, onCancel }) => {
   
     return (
       <Box component="form" onSubmit={onSubmit} sx={{ marginBottom: 3 }}>
-        <label htmlFor="firstName">FirstName</label>
-        <input
-          type="text"
+        <TextField
+          fullWidth
+          label="Имя"
           name="firstName"
           value={client.firstName}
           onChange={handleChange}
+          margin="normal"
+          required
         />
-        <label htmlFor="lastName">LastName</label>
-        <input
-          type="text"
+        <TextField
+          fullWidth
+          label="Фамилия"
           name="lastName"
           value={client.lastName}
           onChange={handleChange}
+          margin="normal"
+          required
         />
-        <label htmlFor="email">Email</label>
-        <input
+        <TextField
+          fullWidth
+          label="Электронная почта"
           type="email"
           name="email"
           value={client.email}
           onChange={handleChange}
+          margin="normal"
+          required
         />
-        <Box sx={{ marginTop: 1 }}>
+        <Box sx={{ marginTop: 2 }}>
           <Button type="submit" variant="contained" color="primary">
-            {onCancel ? "Update" : "Add User"}
+            {onCancel ? "Обновить" : "Добавить пользователя"}
           </Button>
           {onCancel && (
             <Button 
@@ -55,7 +62,7 @@ const Form = ({ handleSubmit, inClient, onCancel }) => {
               onClick={handleCancel}
               sx={{ marginLeft: 1 }}
             >
-              Cancel
+              Отмена
             </Button>
           )}
         </Box>

@@ -64,7 +64,7 @@ function App({
   const MainApp = () => (
     <div className="App">
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <h1>Актеры Breaking Bad</h1>
+        <h1>Управление клиентами</h1>
         {currentUser && (
           <Button variant="outlined" onClick={handleLogout}>
             Выйти ({currentUser.email})

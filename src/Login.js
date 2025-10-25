@@ -14,16 +14,16 @@ const Login = ({ onLogin }) => {
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
       <Paper sx={{ padding: 4, maxWidth: 400, width: '100%' }}>
         <Typography variant="h4" component="h1" gutterBottom align="center">
-          Welcome
+          Добро пожаловать
         </Typography>
         <Typography variant="body1" gutterBottom align="center">
-          Login to get started!
+          Войдите в свой аккаунт
         </Typography>
         
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            label="Email"
+            label="Электронная почта"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -32,7 +32,7 @@ const Login = ({ onLogin }) => {
           />
           <TextField
             fullWidth
-            label="Password"
+            label="Пароль"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -45,12 +45,12 @@ const Login = ({ onLogin }) => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Login
+            Войти
           </Button>
         </form>
         
         <Typography variant="body2" align="center">
-          First time here? Create your account.
+          Впервые здесь? Создайте аккаунт
         </Typography>
       </Paper>
     </Box>
