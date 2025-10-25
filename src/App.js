@@ -6,39 +6,37 @@ import Login from "./Login";
 import { useState } from "react";
 import { Button, Box } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { connect } from 'react-redux';
+import { addClient, deleteClient, updateClient, loginUser, logoutUser } from './redux/actions';
 
-const initialClients = [
-  { id: 1, firstName: "Брайан", lastName: "Крэнстон", email: "walter.white@email.com" },
-  { id: 2, firstName: "Аарон", lastName: "Пол", email: "jesse.pinkman@email.com" },
-  { id: 3, firstName: "Анна", lastName: "Ганн", email: "skyler.white@email.com" },
-  { id: 4, firstName: "Дин", lastName: "Норрис", email: "hank.schrader@email.com" }
-];
 
 const users = [
   { email: "admin@test.com", password: "123456" },
   { email: "user@test.com", password: "password" }
 ];
 
-function App() {
-  const [clients, setClients] = useState(initialClients);
+function App({ 
+  clients, 
+  currentUser, 
+  addClient, 
+  deleteClient, 
+  updateClient, 
+  loginUser, 
+  logoutUser 
+}) {
   const [viewMode, setViewMode] = useState('table');
   const [editingClient, setEditingClient] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
 
-  const delCli = (id) => {
-    setClients(clients.filter((client) => client.id !== id));
-  };
-
-  const addClient = (client) => {
+  const handleAddClient = (client) => {
     if (editingClient) {
-      setClients(clients.map(c => c.id === editingClient.id ? { ...client, id: editingClient.id } : c));
+      updateClient({ ...client, id: editingClient.id });
       setEditingClient(null);
     } else {
       const newClient = {
         ...client,
         id: Math.max(...clients.map(c => c.id)) + 1
       };
-      setClients([...clients, newClient]);
+      addClient(newClient);
     }
   };
 
@@ -53,14 +51,14 @@ function App() {
   const handleLogin = (email, password) => {
     const user = users.find(u => u.email === email && u.password === password);
     if (user) {
-      setCurrentUser({ email });
+      loginUser({ email });
       return true;
     }
     return false;
   };
 
   const handleLogout = () => {
-    setCurrentUser(null);
+    logoutUser();
   };
 
   const MainApp = () => (
@@ -91,20 +89,20 @@ function App() {
       </Box>
 
       <Form 
-        handleSubmit={addClient} 
+        handleSubmit={handleAddClient} 
         inClient={editingClient || {firstName: "", lastName: "", email: ""}}
         onCancel={editingClient ? cancelEdit : null}
       />
       
       {viewMode === 'table' ? (
-        <Table clients={clients} delClient={delCli} onEdit={handleEdit} />
+        <Table clients={clients} delClient={deleteClient} onEdit={handleEdit} />
       ) : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
           {clients.map(client => (
             <ClientCard 
               key={client.id} 
               client={client} 
-              delClient={delCli} 
+              delClient={deleteClient} 
               onEdit={handleEdit}
             />
           ))}
@@ -133,4 +131,17 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  clients: state.clients.clients,
+  currentUser: state.user.currentUser
+});
+
+const mapDispatchToProps = {
+  addClient,
+  deleteClient,
+  updateClient,
+  loginUser,
+  logoutUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

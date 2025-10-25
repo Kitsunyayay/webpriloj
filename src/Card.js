@@ -1,34 +1,35 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { connect } from 'react-redux';
+import { deleteClient } from './redux/actions/ClientActions';
 
-const ClientCard = ({ client, delClient, onEdit }) => {
+const ClientCard = ({ client, deleteClient, onEdit }) => {
   return (
-    <Card sx={{ maxWidth: 300, margin: 2 }}>
+    <Card sx={{ maxWidth: 300, margin: 2, boxShadow: 3 }}>
       <CardContent>
-        <Typography variant="h6" component="div">
+        <Typography variant="h6" component="div" gutterBottom>
           {client.firstName} {client.lastName}
         </Typography>
-        <Typography color="text.secondary">
-          Email: {client.email}
+        <Typography color="text.secondary" sx={{ mb: 1 }}>
+          <strong>Email:</strong> {client.email}
         </Typography>
-        <Typography color="text.secondary">
-          ID: {client.id}
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          <strong>ID:</strong> {client.id}
         </Typography>
-        <Box sx={{ marginTop: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button 
             variant="contained" 
             color="primary" 
             size="small"
             onClick={() => onEdit(client)}
-            sx={{ marginRight: 1 }}
           >
             Edit
           </Button>
           <Button 
             variant="contained" 
-            color="secondary" 
+            color="error" 
             size="small"
-            onClick={() => delClient(client.id)}
+            onClick={() => deleteClient(client.id)}
           >
             Delete
           </Button>
@@ -38,4 +39,8 @@ const ClientCard = ({ client, delClient, onEdit }) => {
   );
 };
 
-export default ClientCard;
+const mapDispatchToProps = {
+  deleteClient
+};
+
+export default connect(null, mapDispatchToProps)(ClientCard);

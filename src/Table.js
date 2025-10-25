@@ -1,7 +1,9 @@
 import { Table, TableContainer, Button, TableBody, TableRow, TableHead, Paper, TableCell } from "@mui/material";
 import React from "react";
+import { connect } from 'react-redux';
+import { deleteClient } from './redux/actions/ClientActions';
 
-const ClientTable = ({ clients, delClient, onEdit }) => {
+const ClientTable = ({ clients, deleteClient, onEdit }) => {
 
   return (
     <TableContainer component={Paper}>
@@ -42,7 +44,7 @@ const ClientTable = ({ clients, delClient, onEdit }) => {
                   variant="contained" 
                   color="secondary"
                   size="small"
-                  onClick={() => delClient(client.id)}
+                  onClick={() => deleteClient(client.id)}
                 >
                   Delete
                 </Button>
@@ -55,4 +57,8 @@ const ClientTable = ({ clients, delClient, onEdit }) => {
   );
 };
 
-export default ClientTable;
+const mapDispatchToProps = {
+  deleteClient
+};
+
+export default connect(null, mapDispatchToProps)(ClientTable);
